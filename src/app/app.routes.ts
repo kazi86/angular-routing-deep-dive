@@ -27,15 +27,18 @@ export const routes:Routes = [
       resolve:{
         userTasks : userTask
       },
-      runGuardsAndResolvers:'paramsOrQueryParamsChange'
+      runGuardsAndResolvers:'paramsOrQueryParamsChange',
+      title: 'User Tasks'
     },
     {
       path:'tasks/new-tasks',
-      component: NewTaskComponent
+      component: NewTaskComponent,
+      title:'Create New Tasks'
     },
     {
       path:'**',
-      component: NoTaskComponent
+      component: NoTaskComponent,
+      title:'No Task Selected'
     }
   ]
   }

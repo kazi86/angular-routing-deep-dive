@@ -71,8 +71,6 @@ export class TasksComponent implements OnInit{
 
 export const userTask :ResolveFn<Task[]> = (activatedRoute : ActivatedRouteSnapshot,routerState:RouterStateSnapshot)=>{
 
-  let activatedRouteSvc = inject(ActivatedRoute);
-
   let tasksSvc = inject(TasksService);
 
   let userId = activatedRoute.params['userId'];
