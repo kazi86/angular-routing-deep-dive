@@ -1,6 +1,13 @@
 import {Component, computed, inject, Input, input, OnInit} from '@angular/core';
 import {UsersService} from "../users.service";
-import {ActivatedRoute, RouterLink, RouterOutlet} from "@angular/router";
+import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  ResolveFn,
+  RouterLink,
+  RouterOutlet,
+  RouterState, RouterStateSnapshot
+} from "@angular/router";
 
 @Component({
   selector: 'app-user-tasks',
@@ -27,11 +34,13 @@ export class UserTasksComponent implements OnInit{
 
   public message = input<string>();
 
+  public userName = input<string>();
+
   public userSvc = inject(UsersService);
 
   // public userName = computed(()=>this.userSvc.users.find(u=>u.id === this.userId())?.name);
 
-  public userName = "";
+  // public userName = "";
 
   public activatedRouteSvc = inject(ActivatedRoute);
 
@@ -39,19 +48,39 @@ export class UserTasksComponent implements OnInit{
 
   public ngOnInit(){
 
+    this.activatedRouteSvc.data.subscribe({
+      next:(data)=>{
+        console.log(data);
+      }
+    });
+
     console.log('Static data attached to the /user/:userId', this.message());
 
     console.log(this.activatedRouteSvc); //reactive to changes and key=>values are behaviour subjects
 
     console.log(this.activatedRouteSvc.snapshot); // not reactive to changes after component has been rendered
 
-    this.activatedRouteSvc.paramMap.subscribe({
-      next:(data)=>{
-        this.userName =
-          this.userSvc.users.find(item=>item.id === data.get('userId'))?.name || '';
-      }
-    })
+  }
+
+}
+
+export const resolveUserName : ResolveFn<string> = (activatedRoute : ActivatedRouteSnapshot,routerState:RouterStateSnapshot)=>
+{
+
+  let userSvc = inject(UsersService);
+
+  let userName: string = "";
+
+  let userId = activatedRoute.params['userId'];
+
+  if(userId){
+
+    let user = userSvc.users.find(item=>item.id === userId)
+
+    userName = user.name;
 
   }
+
+  return userName;
 
 }

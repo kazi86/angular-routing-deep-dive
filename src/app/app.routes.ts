@@ -1,9 +1,9 @@
 import {Routes} from "@angular/router";
 import {TaskComponent} from "./tasks/task/task.component";
 import {NoTaskComponent} from "./tasks/no-task/no-task.component";
-import {UserTasksComponent} from "./users/user-tasks/user-tasks.component";
+import {resolveUserName, UserTasksComponent} from "./users/user-tasks/user-tasks.component";
 import {NewTaskComponent} from "./tasks/new-task/new-task.component";
-import {TasksComponent} from "./tasks/tasks.component";
+import {TasksComponent, userTask} from "./tasks/tasks.component";
 
 export const routes:Routes = [
   {
@@ -16,11 +16,18 @@ export const routes:Routes = [
   data:{
     message : 'Static Data'
   },
+  resolve:{
+    userName : resolveUserName
+  },
   children: [
 
     {
       path:'tasks',
-      component: TasksComponent
+      component: TasksComponent,
+      resolve:{
+        userTasks : userTask
+      },
+      runGuardsAndResolvers:'paramsOrQueryParamsChange'
     },
     {
       path:'tasks/new-tasks',
