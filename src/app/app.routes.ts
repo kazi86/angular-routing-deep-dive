@@ -13,6 +13,9 @@ export const routes:Routes = [
   {
   path:'user/:userId',
   component:UserTasksComponent,
+  data:{
+    message : 'Static Data'
+  },
   children: [
 
     {

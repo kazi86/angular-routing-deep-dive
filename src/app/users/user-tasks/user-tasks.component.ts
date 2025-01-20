@@ -25,6 +25,8 @@ export class UserTasksComponent implements OnInit{
 
   // public userId = input.required <string>();
 
+  public message = input<string>();
+
   public userSvc = inject(UsersService);
 
   // public userName = computed(()=>this.userSvc.users.find(u=>u.id === this.userId())?.name);
@@ -36,6 +38,8 @@ export class UserTasksComponent implements OnInit{
   constructor() {}
 
   public ngOnInit(){
+
+    console.log('Static data attached to the /user/:userId', this.message());
 
     console.log(this.activatedRouteSvc); //reactive to changes and key=>values are behaviour subjects
 
