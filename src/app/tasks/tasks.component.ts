@@ -7,7 +7,7 @@ import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
   Resolve,
-  ResolveFn,
+  ResolveFn, Router,
   RouterLink,
   RouterStateSnapshot
 } from "@angular/router";
@@ -103,5 +103,12 @@ export const userTask :ResolveFn<Task[]> = (activatedRoute : ActivatedRouteSnaps
   }
 
   return userTasksData;
+
+}
+
+export const userTaskAddressBar: ResolveFn<string> = (activateRoute : ActivatedRouteSnapshot,routerState:RouterStateSnapshot)=>{
+
+
+  return userTask(activateRoute,routerState) + " 's Tasks";
 
 }
